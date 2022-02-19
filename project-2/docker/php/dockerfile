@@ -1,0 +1,42 @@
+# Pull base image
+FROM php:8.0.13-apache
+
+# Install + CLeanup
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf \
+\
+    &&  apt-get update \
+    &&  apt-get install -y --no-install-recommends \
+          locales apt-utils git libicu-dev g++ libpng-dev libxml2-dev libzip-dev libonig-dev libxslt-dev unzip unzip npm vim zsh \
+\
+    &&  curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh \
+       &&  echo "en_US.UTF-8 UTF-8" > /etc/locale.gen  \
+       &&  echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen \
+       &&  locale-gen \
+\
+    &&  curl -sS https://getcomposer.org/installer | php -- \
+    &&  mv composer.phar /usr/local/bin/composer \
+    &&  npm install --global yarn \
+\
+    &&  curl -sS https://get.symfony.com/cli/installer | bash \
+    &&  mv /root/.symfony/bin/symfony /usr/local/bin \
+    &&  pecl install xdebug \
+    &&  docker-php-ext-enable xdebug \
+\
+    &&  pecl install redis \
+    &&  docker-php-ext-enable redis \
+    &&  docker-php-ext-configure intl \
+    &&  docker-php-ext-install \
+            calendar soap pdo pdo_mysql mysqli opcache intl zip dom mbstring gd xsl \
+\
+    &&  pecl install apcu && docker-php-ext-enable apcu\
+    && curl -fsSL https://deb.nodesource.com/setup_16.x | bash \
+    && apt-get install -y nodejs
+
+# COPY de conf
+COPY ./config/php.ini /usr/local/etc/php/
+COPY ./vhosts/vhost.conf /etc/apache2/sites-available/000-default.conf
+COPY ./xdebug/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+COPY ./xdebug/error_reporting.ini /usr/local/etc/php/conf.d/error_reporting.ini
+
+# Define Workspace
+WORKDIR /var/www/

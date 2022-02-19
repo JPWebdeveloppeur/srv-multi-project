@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+    php:
+        build: docker/php
+        extra_hosts:
+            - host.docker.internal:host-gateway
+        expose:
+            - "9003"
+        container_name: docker_srv_prj-3_apache_php
+        ports:
+            - "8383:80"
+            - "8444:443"
+        volumes:
+          - ./:/var/www
+        restart: "no"
+        networks:
+            - name_network
+networks:
+    name_network:
+        external: true

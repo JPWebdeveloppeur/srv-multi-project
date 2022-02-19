@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+    mysql:
+        image: mysql:5.7
+        restart: "no"
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./docker_data/bdd:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: "root"
+            MYSQL_USER: "sudb"
+            MYSQL_PASSWORD: "root"
+        networks:
+            - name
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        restart: "no"
+        environment:
+          PMA_HOST: "mysql"
+          MYSQL_ROOT_PASSWORD: "root"
+          UPLOAD_LIMIT: "5000M"
+        ports:
+            - "8181:80"
+        networks:
+            - name
+
+networks:
+    name:
+
