@@ -55,7 +55,7 @@ Outre l'image de base Apache PHP 8.0.13, l'environnement comprend également les
 
 # Démarrage de l'environnement de développement avec PHP, MySQL et phpMyAdmin
 
-➔ Ouvrez un terminal type bash et placez-vous dans le répertoire Goa puis saisir :
+➔ Ouvrez un terminal type bash et placez-vous dans le répertoire project-1 puis saisir :
 
 ```
  docker-compose up -d ou docker-compose up --build
@@ -67,100 +67,6 @@ Outre l'image de base Apache PHP 8.0.13, l'environnement comprend également les
  docker exec -it container_name zsh ou bash 
 ```
 
-➔ Récuperer les .env-local de chaque projet
-
-➔ On va commencé par le projet "srv_employee", donc dans le terminal saisir les commandes suivantes:
-
-```
- - cd srv_employee
-
- ```
-
-➔ Dans le .env-local voici la ligne à remplacer sinon, vous aurez des erreurs !
-```
-    DATABASE_URL="mysql://root:root@mysql:3306/srv_employee?serverVersion=5.7"
-```
-puis
-```
- - docker-compose up -d --build
- - docker exec -it docker_srvemployee_apache_php zsh
- - composer install
- - php bin/console doctrine:database:create
- - php bin/console doctrine:migrations:migrate
- - php bin/console doctrine:fixtures:load
- - yarn install
- - yarn watch
- 
-```
-
-➔ Voici l'url pour l'application web :
-[http://srvemployee.bo/](http://srvemployee.bo/)
-
-
-➔ On va maintenant aller sur le projet "srv_client", dans le terminal saisir les commandes suivantes:
-```
- - cd srv_client
-```
-
-➔ Dans le .env-local voici la ligne à remplacer.
-```
-  DATABASE_URL="mysql://root:root@mysql:3306/srv_client?serverVersion=5.7"
-```
-puis
-```
- - docker-compose up -d --build
- - docker exec -it docker_srvclient_apache_php zsh
- - composer install
- - php bin/console doctrine:database:create
- - php bin/console doctrine:migrations:migrate
- 
-```
-➔ Voici l'url pour l'application web :
-[http://srvclient.bo/](http://srvclient.bo/)
-
-
-➔ On va finir par le projet "goacar-bo", dans le terminal saisir les commandes suivantes:
-
-```
- - cd goacar-bo
- - docker-compose up -d --build
- ```
-➔ Il faut maintenant récuperer les ip des containers pour les mettre dans le .env-local, pour cela il vous suffit de faire :
-```
- - docker network inspect goa_network
-```
-➔ Dans la partie "Containers" vous aurez tous vos containers avec leurs ip respectives, du coup il vous suffit juste de les récupérés remplacer dans les lignes suivantes du .env-local:
-
-```
-DATABASE_URL="mysql://root:root@mysql:3306/goacar?serverVersion=5.7"
-###< doctrine/doctrine-bundle ###
-APP_USER_BASE_URL="http://srvemployee.bo"
-APP_USER_ENDPOINT='http://adresse_ip/api/v1/users'
-APP_COMPANY_ENDPOINT='http://adresse_ip/api/v1/companies'
-APP_DOMAIN_ENDPOINT='http://adresse_ip/api/v1/domains'
-
-APP_CLIENT_ENDPOINT='http://adresse_ip/api/v1/clients'
-```
-maintenant
-
-```
- - docker exec -it docker_goacarbo_apache_php zsh
- - composer install
- - php bin/console doctrine:database:create
- - php bin/console doctrine:migrations:migrate
- - php bin/console doctrine:fixtures:load
- - yarn install
- - yarn watch
-
- ## Import vehicles from carshop
-    - php bin/console import:vehicles:carshop
-
- ## Import sale points from carshop
-    - php bin/console import:sale-points:carshop
- 
-```
-➔ Voici l'url pour l'application web :
-[http://goacar.bo/](http://goacar.bo/)
 
 ➔ Ps : Pour les utilisateurs de Linux pensé mettre à jour le fichier hosts comme ceci : 
 ```
@@ -170,10 +76,10 @@ et dans le fichier
 
 ```
 # Project ByMyCar & Goa
-172.18.0.3      local.bymycar.fr
-172.25.0.6      goacar.bo
-172.25.0.4      srvemployee.bo
-172.25.0.5      srvclient.bo
+172.18.0.3      local.fr
+172.25.0.6      project-1.bo
+172.25.0.4      project-2.bo
+172.25.0.5      project-3.bo
 ```
 
 Enregistrer et quitter 
