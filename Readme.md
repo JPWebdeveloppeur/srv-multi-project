@@ -36,18 +36,18 @@ Outre l'image de base Apache PHP 8.0.13, l'environnement comprend également les
             - /project-1/docker/php/vhosts   # Contient la conf apache
             - /project-1/docker/php/xdebug   # Contient la conf pour xdebug
             - /project-1/docker/php/Dockerfile 
-    - /srv_client   # Contient le projet srv_client
-        - /srv_client/docker/php/
-            - /srv_client/docker/php/config   # Contient le php.ini
-            - /srv_client/docker/php/vhosts   # Contient la conf apache
-            - /srv_client/docker/php/xdebug   # Contient la conf pour xdebug
-            - /srv_client/docker/php/Dockerfile 
-    - /srv_employee # Contient le projet srv_employee
-        - /srv_employee/docker/php # Contient la config
-            - /srv_employee/docker/php/config   # Contient le php.ini
-            - /srv_employee/docker/php/vhosts   # Contient la conf apache
-            - /srv_employee/docker/php/xdebug   # Contient la conf pour xdebug
-            - /srv_employee/docker/php/Dockerfile 
+    - /project-2   # Contient le projet srv_client
+        - /project-2/docker/php/
+            - /project-2/docker/php/config   # Contient le php.ini
+            - /project-2/docker/php/vhosts   # Contient la conf apache
+            - /project-2/docker/php/xdebug   # Contient la conf pour xdebug
+            - /project-2/docker/php/Dockerfile 
+    - /project-3 # Contient le projet srv_employee
+        - /project-3/docker/php # Contient la config
+            - /project-3/docker/php/config   # Contient le php.ini
+            - /project-3/docker/php/vhosts   # Contient la conf apache
+            - /project-3/docker/php/xdebug   # Contient la conf pour xdebug
+            - /project-3/docker/php/Dockerfile 
     
     - docker-compose.yml # Orchestrer vos conteneurs Mysql et Phpmyadmin
     - Makefile
